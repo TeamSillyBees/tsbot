@@ -10,7 +10,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>tsb_dao</module>
         <module>tsb_mirai</module>
         <module>tsb_plugin</module>
         <module>tsb_starter</module>
