@@ -1,9 +1,11 @@
 package cc.starxy.tsbot.tsb_mirai;
 
-import cc.starxy.tsbot.tsb_mirai.core.MiraiBot;
-import cc.starxy.tsbot.tsb_plugin.leetcode.session.Login;
+import cc.starxy.tsbot.tsb_mirai.core.MiraiCore;
+import cc.starxy.tsbot.tsb_mirai.listener.FriendListener;
+import cc.starxy.tsbot.tsb_mirai.listener.GroupListener;
+import net.mamoe.mirai.Bot;
+import net.mamoe.mirai.event.Events;
 
-import java.io.IOException;
 
 /**
  * Mirai Bot 启动类
@@ -12,18 +14,14 @@ import java.io.IOException;
  */
 public class MiraiStart {
 
-    public static void start(String lcUsername, String lcPassword, Long miraiUsername, String miraiPassword) {
+    public static void start(Long miraiUsername, String miraiPassword) {
 
-        // leetcode login
-        Login login = new Login(lcUsername, lcPassword);
-        try {
-            login.doLogin();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        MiraiBot bot = MiraiBot.getInstance();
         // Mirai login
-        bot.getBot(miraiUsername, miraiPassword).login();
+        Bot bot = MiraiCore.getInstance().login(miraiUsername, miraiPassword);
+        Events.registerEvents(bot, new GroupListener());
+        Events.registerEvents(bot, new FriendListener());
+
+        // 挂载协程
+        bot.join();
     }
 }
