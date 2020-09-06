@@ -5,6 +5,7 @@
 .idea
 out/
 target/
+*.iml
 
 # File-based project format
 *.iws
