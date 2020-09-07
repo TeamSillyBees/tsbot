@@ -32,7 +32,7 @@ public class QuestionInfo {
      * @return 每日一题
      * @throws IOException
      */
-    public static QuestionVO questionOfToday() throws IOException {
+    public static TodayRecordVO questionOfToday() throws IOException {
         String queryString = "query " +
                 "questionOfToday {" +
                 "  todayRecord {" +
@@ -66,7 +66,7 @@ public class QuestionInfo {
             return JSON.parseObject(resp)
                     .getJSONObject("data")
                     .getJSONArray("todayRecord").getJSONObject(0)
-                    .toJavaObject(TodayRecordVO.class).getQuestion();
+                    .toJavaObject(TodayRecordVO.class);
         } else {
             log.warn("获取每日一题失败");
             return null;
