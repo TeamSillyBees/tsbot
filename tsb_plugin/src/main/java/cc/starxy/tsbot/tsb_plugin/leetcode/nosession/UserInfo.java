@@ -1,8 +1,8 @@
 package cc.starxy.tsbot.tsb_plugin.leetcode.nosession;
 
 
-import cc.starxy.tsbot.tsb_plugin.leetcode.bean.QuestionVO;
 import cc.starxy.tsbot.tsb_plugin.leetcode.bean.RecentSubmission;
+import cc.starxy.tsbot.tsb_plugin.leetcode.bean.TodayRecordVO;
 import cc.starxy.tsbot.tsb_plugin.leetcode.constants.LeetCodeCn;
 import cc.starxy.tsbot.tsb_plugin.leetcode.constants.SubmissionStatus;
 import cc.starxy.tsbot.tsb_utils.httpclient.OkHttpHelper;
@@ -100,16 +100,17 @@ public class UserInfo {
      * @return 是否完成
      */
     public static Boolean dailyQuestionComplete(String username) throws IOException {
-        QuestionVO dailyQues = QuestionInfo.questionOfToday();
+        TodayRecordVO dailyQues = QuestionInfo.questionOfToday();
         List<RecentSubmission> list = UserInfo.recentSubmissions(username);
         if (dailyQues == null || list == null) {
             return false;
         }
         for (RecentSubmission submission : list) {
-            if (submission.getQuestionTitleSlug().equals(dailyQues.getTitleSlug())) {
+            if (submission.getQuestionTitleSlug().equals(dailyQues.getQuestion().getTitleSlug())) {
                 return SubmissionStatus.AC.equals(submission.getStatus());
             }
         }
+        // todo 需要重构返回值，返回前确认当天提交的题目是否超过能拿到的最新提交的数量，如果超过了则有可能已经完成了每日一题但是没办法获取到记录了
         return false;
     }
 

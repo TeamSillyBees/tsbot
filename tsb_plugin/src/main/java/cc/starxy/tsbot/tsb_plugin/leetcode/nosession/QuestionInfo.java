@@ -40,6 +40,7 @@ public class QuestionInfo {
                 "      questionFrontendId" +
                 "      titleSlug" +
                 "      translatedTitle" +
+                "      stats" +
                 "      __typename" +
                 "    }" +
                 "    date" +
