@@ -12,10 +12,6 @@ import java.util.stream.Collectors;
  */
 
 public enum KeyWord {
-    /**
-     * Tsbot
-     */
-    TSBOT("TSBOT","tsbot","TSBOT"),
 
     /**
      * 帮助
@@ -23,9 +19,14 @@ public enum KeyWord {
     BOT_HELP("帮助", ".h", "help"),
 
     /**
+     * 帮助
+     */
+    USER_BIND("绑定", ".b", "bind"),
+
+    /**
      * 添加每日一题提醒
      */
-    DAILY_QUESTION_JOIN("添加提醒", ".j", "join"),
+    DAILY_NOTICE("每日一题提醒", ".dn", "daily_notice"),
 
     /**
      * 查看用户信息
