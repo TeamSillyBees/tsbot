@@ -19,7 +19,7 @@ public enum KeyWord {
     BOT_HELP("帮助", ".h", "help"),
 
     /**
-     * 帮助
+     * 绑定
      */
     USER_BIND("绑定", ".b", "bind"),
 

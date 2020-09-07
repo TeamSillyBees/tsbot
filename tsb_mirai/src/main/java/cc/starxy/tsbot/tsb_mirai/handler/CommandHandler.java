@@ -59,7 +59,7 @@ public class CommandHandler {
                         "作用：\n" +
                         "  每日晚6点半，检测用户是否完成每日一题，未完成则提醒\n" +
                         "  如果传入 leetcode id 则将给定 id 与调用者绑定并每日提醒每日一题的完成情况\n" +
-                        "  如果传入 lc id，则需要提前使用 bind 命令绑定\n" +
+                        "  如果未传入 lc id，则需要提前使用 bind 命令绑定\n" +
                         "样例：\n" +
                         "  @[机器人] .dn starxy\n" +
                         "  @[机器人] daily_notice starxy\n" +

@@ -13,10 +13,6 @@ import java.util.Date;
  */
 public class MessageHandler {
 
-    public static String response(PlainText text) {
-        return null;
-    }
-
     /**
      * 处理报错信息
      *
@@ -30,7 +26,8 @@ public class MessageHandler {
                 "----------------------\n" +
                 errorMsg;
         if (e != null) {
-            msg += "----------------------\n" +
+            msg += "\n" +
+                    "----------------------\n" +
                     e.getMessage();
         }
         bot.getGroup(miraiCore.getErrorNotifyGroup()).sendMessage(msg);
