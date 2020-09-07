@@ -13,6 +13,11 @@ import net.mamoe.mirai.BotFactoryJvm;
 public class MiraiCore {
 
     private static final MiraiCore MIRAI_BOT = new MiraiCore();
+    /**
+     * 错误通知群
+     */
+    @Getter @Setter
+    private long errorNotifyGroup;
     @Getter
     private Bot bot = null;
 

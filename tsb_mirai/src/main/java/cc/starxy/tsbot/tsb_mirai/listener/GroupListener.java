@@ -4,16 +4,15 @@ import cc.starxy.tsbot.tsb_mirai.core.MiraiCore;
 import cc.starxy.tsbot.tsb_mirai.enums.KeyWord;
 import cc.starxy.tsbot.tsb_mirai.handler.CommandHandler;
 import cc.starxy.tsbot.tsb_mirai.handler.MessageHandler;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import kotlin.coroutines.CoroutineContext;
 import net.mamoe.mirai.Bot;
+import net.mamoe.mirai.contact.Contact;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.message.GroupMessageEvent;
 import net.mamoe.mirai.message.data.At;
 import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.PlainText;
-import net.sf.jsqlparser.statement.select.First;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -34,9 +33,15 @@ public class GroupListener extends SimpleListenerHost {
         //todo 处理群组消息
         Bot bot = MiraiCore.getInstance().getBot();
         MessageChain messages = event.getMessage();
-        Boolean atFlag = messages.first(At.Key) != null && messages.first(At.Key).getTarget() == bot.getId();
-        Boolean startWithTsbotFlag = messages.first(PlainText.Key).getContent().startsWith(KeyWord.TSBOT.getDescription());
-        event.getGroup().sendMessage(new PlainText(CommandHandler.printArgs(KeyWord.BOT_HELP)));
+        boolean atFlag = messages.first(At.Key) != null && messages.first(At.Key).getTarget() == bot.getId();
+        At at = new At(event.getGroup().get(1L));
+        if(atFlag){
+
+        }else {
+            // 忽略消息
+            return;
+        }
+        event.getGroup().sendMessage(new PlainText(CommandHandler.printArgHelp(KeyWord.BOT_HELP)));
     }
 
 
@@ -48,6 +53,6 @@ public class GroupListener extends SimpleListenerHost {
      */
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
-        // todo 收到异常后给开发者发送消息
+        MessageHandler.sendErrorMessage("监听到群组消息，处理失败",exception);
     }
 }

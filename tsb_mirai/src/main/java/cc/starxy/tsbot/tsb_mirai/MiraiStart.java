@@ -14,11 +14,14 @@ import net.mamoe.mirai.event.Events;
  */
 public class MiraiStart {
 
-    public static void start(Long miraiUsername, String miraiPassword) {
+    public static void start(Long miraiUsername, String miraiPassword,Long notifyGroup) {
 
+
+        // 设置报错群组
+        MiraiCore.getInstance().setErrorNotifyGroup(notifyGroup);
         // Mirai login
         Bot bot = MiraiCore.getInstance().login(miraiUsername, miraiPassword);
-        Events.registerEvents(bot, new GroupListener());
+//        Events.registerEvents(bot, new GroupListener());
         Events.registerEvents(bot, new FriendListener());
 
         // 挂载协程
