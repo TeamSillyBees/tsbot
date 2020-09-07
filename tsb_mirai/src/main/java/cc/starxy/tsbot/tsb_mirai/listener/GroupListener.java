@@ -1,12 +1,12 @@
 package cc.starxy.tsbot.tsb_mirai.listener;
 
+import cc.starxy.tsbot.tsb_mirai.commands.CommandFactory;
 import cc.starxy.tsbot.tsb_mirai.core.MiraiCore;
 import cc.starxy.tsbot.tsb_mirai.enums.KeyWord;
-import cc.starxy.tsbot.tsb_mirai.handler.CommandHandler;
-import cc.starxy.tsbot.tsb_mirai.handler.MessageHandler;
+import cc.starxy.tsbot.tsb_mirai.utils.CommandHandler;
+import cc.starxy.tsbot.tsb_mirai.utils.MessageUtils;
 import kotlin.coroutines.CoroutineContext;
 import net.mamoe.mirai.Bot;
-import net.mamoe.mirai.contact.Contact;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.message.GroupMessageEvent;
@@ -14,6 +14,7 @@ import net.mamoe.mirai.message.data.At;
 import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.PlainText;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
@@ -22,6 +23,9 @@ import org.jetbrains.annotations.NotNull;
  * @author DONG Jixing
  */
 public class GroupListener extends SimpleListenerHost {
+
+    @Autowired
+    private CommandFactory commandFactory;
 
     /**
      * 消息监听
@@ -53,6 +57,6 @@ public class GroupListener extends SimpleListenerHost {
      */
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
-        MessageHandler.sendErrorMessage("监听到群组消息，处理失败",exception);
+        MessageUtils.sendErrorMessage("监听到群组消息，处理失败",exception);
     }
 }
