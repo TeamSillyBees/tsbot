@@ -10,15 +10,16 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "mirai")
 @Component
 public class MiraiConfig {
-    Long username;
+    Long botId;
     String password;
+    Long notifyGroupId;
 
-    public Long getUsername() {
-        return username;
+    public Long getBotId() {
+        return botId;
     }
 
-    public void setUsername(Long username) {
-        this.username = username;
+    public void setBotId(Long botId) {
+        this.botId = botId;
     }
 
     public String getPassword() {
@@ -27,5 +28,13 @@ public class MiraiConfig {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Long getNotifyGroupId() {
+        return notifyGroupId;
+    }
+
+    public void setNotifyGroupId(Long notifyGroupId) {
+        this.notifyGroupId = notifyGroupId;
     }
 }
