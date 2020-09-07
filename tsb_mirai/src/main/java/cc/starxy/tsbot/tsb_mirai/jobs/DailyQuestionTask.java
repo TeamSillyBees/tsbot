@@ -1,6 +1,6 @@
 package cc.starxy.tsbot.tsb_mirai.jobs;
 
-import cc.starxy.tsbot.tsb_mirai.handler.MessageHandler;
+import cc.starxy.tsbot.tsb_mirai.utils.MessageUtils;
 import cc.starxy.tsbot.tsb_plugin.leetcode.bean.QuestionStats;
 import cc.starxy.tsbot.tsb_plugin.leetcode.bean.QuestionVO;
 import cc.starxy.tsbot.tsb_plugin.leetcode.bean.TodayRecordVO;
@@ -43,9 +43,9 @@ public class DailyQuestionTask {
                     return;
                 }
             }
-            MessageHandler.sendErrorMessage("获取每日一题失败", new Exception("每日一题返回数据为空"));
+            MessageUtils.sendErrorMessage("获取每日一题失败", new Exception("每日一题返回数据为空"));
         } catch (IOException e) {
-            MessageHandler.sendErrorMessage("获取每日一题失败", e);
+            MessageUtils.sendErrorMessage("获取每日一题失败", e);
         }
 
     }

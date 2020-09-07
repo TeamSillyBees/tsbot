@@ -1,17 +1,17 @@
-package cc.starxy.tsbot.tsb_mirai.handler;
+package cc.starxy.tsbot.tsb_mirai.utils;
 
 import cc.starxy.tsbot.tsb_mirai.core.MiraiCore;
+import cc.starxy.tsbot.tsb_mirai.enums.KeyWord;
 import net.mamoe.mirai.Bot;
-import net.mamoe.mirai.message.data.PlainText;
 
 import java.util.Date;
 
 /**
- * 机器人消息处理
+ * 消息工具类
  *
  * @author DONG Jixing
  */
-public class MessageHandler {
+public class MessageUtils {
 
     /**
      * 处理报错信息
@@ -32,4 +32,5 @@ public class MessageHandler {
         }
         bot.getGroup(miraiCore.getErrorNotifyGroup()).sendMessage(msg);
     }
+
 }

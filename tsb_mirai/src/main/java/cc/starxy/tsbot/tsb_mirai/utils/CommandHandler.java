@@ -1,4 +1,4 @@
-package cc.starxy.tsbot.tsb_mirai.handler;
+package cc.starxy.tsbot.tsb_mirai.utils;
 
 import cc.starxy.tsbot.tsb_mirai.enums.KeyWord;
 

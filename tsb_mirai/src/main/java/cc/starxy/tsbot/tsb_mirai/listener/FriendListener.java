@@ -1,14 +1,10 @@
 package cc.starxy.tsbot.tsb_mirai.listener;
 
-import cc.starxy.tsbot.tsb_mirai.enums.KeyWord;
-import cc.starxy.tsbot.tsb_mirai.handler.CommandHandler;
-import cc.starxy.tsbot.tsb_mirai.handler.MessageHandler;
+import cc.starxy.tsbot.tsb_mirai.utils.MessageUtils;
 import kotlin.coroutines.CoroutineContext;
 import net.mamoe.mirai.event.EventHandler;
 import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.message.FriendMessageEvent;
-import net.mamoe.mirai.message.data.MessageChain;
-import net.mamoe.mirai.message.data.PlainText;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +27,6 @@ public class FriendListener extends SimpleListenerHost {
 
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
-        MessageHandler.sendErrorMessage("监听到好友消息，处理失败",exception);
+        MessageUtils.sendErrorMessage("监听到好友消息，处理失败",exception);
     }
 }
