@@ -110,7 +110,7 @@ public class UserInfo {
                 return SubmissionStatus.AC.equals(submission.getStatus());
             }
         }
-        return null;
+        return false;
     }
 
 }
