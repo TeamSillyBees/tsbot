@@ -26,8 +26,8 @@ public class CommandFactory {
      *
      * @return 正则集合
      */
-    public List<Pattern> regx() {
-        List<Pattern> patterns = new ArrayList<>();
+    public List<String> regx() {
+        List<String> patterns = new ArrayList<>();
         for (CommandFacade command : commands) {
             patterns.add(command.regex());
         }
@@ -55,7 +55,7 @@ public class CommandFactory {
      * @param pattern 正则表达式
      * @return 命令对象
      */
-    public CommandFacade get(Pattern pattern) {
+    public CommandFacade get(String pattern) {
         for (CommandFacade command : commands) {
             if (command.regex().equals(pattern)) {
                 return command;

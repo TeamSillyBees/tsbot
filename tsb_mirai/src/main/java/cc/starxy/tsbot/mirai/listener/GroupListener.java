@@ -17,8 +17,11 @@ import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.message.data.PlainText;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -29,6 +32,7 @@ import java.util.stream.Collectors;
  *
  * @author DONG Jixing
  */
+@Component
 public class GroupListener extends SimpleListenerHost {
 
     @Autowired
@@ -46,18 +50,21 @@ public class GroupListener extends SimpleListenerHost {
         MessageChain messages = event.getMessage();
         // 判断是否 At 了机器人
         boolean atBotCheck = messages.first(At.Key) != null && messages.first(At.Key).getTarget() == bot.getId();
-        PlainText text = messages.first(PlainText.Key);
+        String text = Optional.ofNullable(messages.first(PlainText.Key))
+                .map(Objects::toString)
+                .map(String::trim)
+                .orElse(null);
         if (atBotCheck && text != null) {
             // 拿字符串跟已有的命令匹配
-            List<Pattern> list = commandFactory.regx().stream().filter(pattern -> {
-                CharSequence input;
-                Matcher matcher = pattern.matcher(text.toString());
+            List<String> list = commandFactory.regx().stream().filter(patternStr -> {
+                Pattern pattern = Pattern.compile(patternStr);
+                Matcher matcher = pattern.matcher(text);
                 return matcher.find();
             }).collect(Collectors.toList());
-            if (list.size() != 1) {
+            if (list.size() == 1) {
                 CommandFacade command = commandFactory.get(list.get(0));
-                command.execute(event.getSender(), event.getGroup(), messages);
-            } else {
+                command.execute(event.getSender(), event.getGroup(), text);
+            } else if (list.size() != 0) {
                 // 文本符合不止一个命令类型 发送错误信息，以优化正则表达式
                 StringBuilder msg = new StringBuilder(
                         "出现了命令文本符合多个正则表达式的异常\n" +
@@ -65,7 +72,7 @@ public class GroupListener extends SimpleListenerHost {
                                 text.toString() + "\n" +
                                 "----------------------\n" +
                                 "正则匹配到的命令：\n");
-                for (Pattern pattern : list) {
+                for (String pattern : list) {
                     msg.append(commandFactory.get(pattern).cmd().getDescription());
                     msg.append("\n");
                 }
@@ -74,12 +81,9 @@ public class GroupListener extends SimpleListenerHost {
         } else if (!atBotCheck) {
             // 没有 At 机器人，正常群聊消息，忽略
             return;
-        } else if (text == null) {
+        } else {
             // At 了机器人，但是没有给出任何指令。打印默认消息
             event.getGroup().sendMessage(new PlainText(HelpFacade.printArgHelp(CmdEnum.BOT_HELP)));
-        } else {
-            // 其他情况
-            return;
         }
     }
 
@@ -92,6 +96,7 @@ public class GroupListener extends SimpleListenerHost {
      */
     @Override
     public void handleException(@NotNull CoroutineContext context, @NotNull Throwable exception) {
+        // todo 抛出的异常不能被这里捕捉 需要进一步debug
         MessageUtils.sendErrorMessage("监听到群组消息，处理失败", exception);
     }
 }

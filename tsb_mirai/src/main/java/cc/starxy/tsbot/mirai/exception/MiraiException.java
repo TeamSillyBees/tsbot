@@ -19,4 +19,26 @@ public class MiraiException {
         }
     }
 
+    /**
+     * 命令个数与需求不符
+     */
+    public static class OptionNumNotExcept extends BaseException{
+
+        private static final long serialVersionUID = 1L;
+        public OptionNumNotExcept(String msg){
+            super(msg);
+        }
+    }
+    /**
+     * 参数错误
+     */
+    public static class OptionNotSupport extends BaseException{
+
+        private static final long serialVersionUID = 1L;
+        public OptionNotSupport(String msg){
+            super(msg);
+        }
+    }
+
+
 }

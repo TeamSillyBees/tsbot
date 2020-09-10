@@ -1,10 +1,13 @@
 package cc.starxy.tsbot.mirai.commands.facade;
 
 import cc.starxy.tsbot.mirai.enums.CmdEnum;
+import cc.starxy.tsbot.mirai.exception.MiraiException;
 import net.mamoe.mirai.contact.Contact;
-import net.mamoe.mirai.message.data.Message;
+import net.mamoe.mirai.contact.Group;
+import net.mamoe.mirai.message.data.At;
 import org.springframework.stereotype.Component;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -27,19 +30,51 @@ public class HelpFacade implements CommandFacade {
      * help cmd
      */
     @Override
-    public Pattern regex() {
-        String pattern = "^(\\.h|help)(\\s(\\w+))?$";
-        return Pattern.compile(pattern);
+    public String regex() {
+        return "^(\\.h|help)(\\s([.\\w]+))?$";
     }
 
     @Override
-    public void execute(Contact sender, Contact group, Message message) {
+    public String[] options(String text) {
+        // 命令参数在正则匹配 group 中的索引位置
+        int indexGroup = 3;
+        Pattern pattern = Pattern.compile(this.regex());
+        Matcher matcher = pattern.matcher(text);
+        if (matcher.find() && matcher.group(indexGroup) != null) {
+            return matcher.group(indexGroup).split(" ");
+        }
+        return new String[0];
+    }
 
+    @Override
+    public void execute(Contact sender, Group group, String message) {
+        String[] opts = this.options(message);
+        CmdEnum cmd;
+        if (opts.length > 1) {
+            throw new MiraiException.OptionNumNotExcept("处理 help 命令时接收预期之外的参数数量");
+        } else if (opts.length == 1) {
+            cmd = CmdEnum.getByWord(opts[0]);
+        } else {
+            // 无参数 默认返回 help
+            cmd = CmdEnum.BOT_HELP;
+        }
+        if (cmd == null) {
+            throw new MiraiException.OptionNotSupport("处理 help 命令时接收不被支持的的参数");
+        }
+        String argsHelp = printArgHelp(cmd);
+        if (group != null) {
+            // 群组消息
+            At at = new At(group.get(sender.getId()));
+            group.sendMessage(at.plus(argsHelp));
+        } else {
+            // 非群组消息
+        }
     }
 
 
     /**
      * 打印指定命令帮助信息
+     *
      * @param cmdEnum 命令
      * @return 帮助信息
      */

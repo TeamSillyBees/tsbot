@@ -1,9 +1,5 @@
 package cc.starxy.tsbot.mirai.enums;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  * 关键词
  *
@@ -34,31 +30,39 @@ public enum CmdEnum {
 
     CmdEnum(String description, String... words) {
         this.description = description;
-        this.words = Arrays.stream(words).collect(Collectors.toList());
+        this.words = words;
     }
 
     /**
      * 指令描述
      */
-    private String description;
+    private final String description;
     /**
      * 操作指令关键字
      */
-    private List<String> words;
+    private final String[] words;
+
+    /**
+     * 根据字符判断命令
+     * @param word 提供字符
+     * @return 命令
+     */
+    public static CmdEnum getByWord(String word) {
+        for (CmdEnum cmd : CmdEnum.values()) {
+            for (String cmdWord : cmd.getWords()) {
+                if (word.equals(cmdWord)) {
+                    return cmd;
+                }
+            }
+        }
+        return null;
+    }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<String> getWords() {
+    public String[] getWords() {
         return words;
-    }
-
-    public void setWords(List<String> words) {
-        this.words = words;
     }
 }
