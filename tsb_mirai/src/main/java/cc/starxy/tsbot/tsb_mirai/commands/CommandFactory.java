@@ -1,7 +1,7 @@
 package cc.starxy.tsbot.tsb_mirai.commands;
 
-import cc.starxy.tsbot.tsb_mirai.enums.KeyWord;
 import cc.starxy.tsbot.tsb_mirai.commands.facade.CommandFacade;
+import cc.starxy.tsbot.tsb_mirai.enums.CmdEnum;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class CommandFactory {
      *
      * @return 正则集合
      */
-    public List<Pattern> cmdRegex() {
+    public List<Pattern> regx() {
         List<Pattern> patterns = new ArrayList<>();
         for (CommandFacade command : commands) {
             patterns.add(command.regex());
@@ -37,15 +37,31 @@ public class CommandFactory {
     /**
      * 根据命令类型返回对应的命令对象
      *
-     * @param keyWord 标识
+     * @param cmdEnum 标识
      * @return 命令对象
      */
-    public CommandFacade get(KeyWord keyWord) {
+    public CommandFacade get(CmdEnum cmdEnum) {
         for (CommandFacade command : commands) {
-            if (command.cmd().equals(keyWord)) {
+            if (command.cmd().equals(cmdEnum)) {
                 return command;
             }
         }
         return null;
     }
+
+    /**
+     * 根据正则表达式返回对应的命令对象
+     *
+     * @param pattern 正则表达式
+     * @return 命令对象
+     */
+    public CommandFacade get(Pattern pattern) {
+        for (CommandFacade command : commands) {
+            if (command.regex().equals(pattern)) {
+                return command;
+            }
+        }
+        return null;
+    }
+
 }

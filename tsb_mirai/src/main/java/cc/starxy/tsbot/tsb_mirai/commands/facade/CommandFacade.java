@@ -1,6 +1,6 @@
 package cc.starxy.tsbot.tsb_mirai.commands.facade;
 
-import cc.starxy.tsbot.tsb_mirai.enums.KeyWord;
+import cc.starxy.tsbot.tsb_mirai.enums.CmdEnum;
 import net.mamoe.mirai.contact.Contact;
 import net.mamoe.mirai.message.data.Message;
 
@@ -16,7 +16,7 @@ public interface CommandFacade {
      * 返回当前命令标识
      * @return KeyWord
      */
-    KeyWord cmd();
+    CmdEnum cmd();
 
     /**
      * 返回用于匹配当前命令的正则表达式

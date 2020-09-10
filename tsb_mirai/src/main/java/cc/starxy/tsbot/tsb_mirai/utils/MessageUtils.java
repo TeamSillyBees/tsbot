@@ -1,7 +1,6 @@
 package cc.starxy.tsbot.tsb_mirai.utils;
 
 import cc.starxy.tsbot.tsb_mirai.core.MiraiCore;
-import cc.starxy.tsbot.tsb_mirai.enums.KeyWord;
 import net.mamoe.mirai.Bot;
 
 import java.util.Date;

@@ -1,7 +1,6 @@
 package cc.starxy.tsbot.tsb_mirai.enums;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,7 +10,7 @@ import java.util.stream.Collectors;
  * @author DONG Jixing
  */
 
-public enum KeyWord {
+public enum CmdEnum {
 
     /**
      * 帮助
@@ -33,7 +32,7 @@ public enum KeyWord {
      */
     USER_INFO("查看用户信息", ".i", "info");
 
-    KeyWord(String description, String... words) {
+    CmdEnum(String description, String... words) {
         this.description = description;
         this.words = Arrays.stream(words).collect(Collectors.toList());
     }
