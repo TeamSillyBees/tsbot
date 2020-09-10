@@ -12,6 +12,7 @@ leetcode:
 mirai:
   username: 123
   password: 456
+  notifyGroupId: 789
 
 logging:
   level:

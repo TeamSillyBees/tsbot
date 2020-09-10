@@ -36,3 +36,4 @@ hs_err_pid*
 
 # project ignore
 application.yml
+application-dev.yml
